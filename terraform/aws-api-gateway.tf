@@ -17,9 +17,8 @@ resource "aws_apigatewayv2_authorizer" "club-abode-auth0-authorizer" {
 
 resource "aws_apigatewayv2_integration" "club-abode-integration" {
   api_id             = aws_apigatewayv2_api.club-abode-api.id
-  integration_type   = "AWS_PROXY"
+  integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
-  
 }
 
 resource "aws_apigatewayv2_route" "club-abode-route" {
