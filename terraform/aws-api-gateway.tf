@@ -15,13 +15,6 @@ resource "aws_apigatewayv2_authorizer" "club-abode-auth0-authorizer" {
   }
 }
 
-resource "aws_apigatewayv2_route" "club-abode-route" {
-  api_id         = aws_apigatewayv2_api.club-abode-api.id
-  route_key      = "/graphql"
-  operation_name = "POST"
-  authorizer_id  = aws_apigatewayv2_authorizer.club-abode-auth0-authorizer.id
-}
-
 resource "aws_apigatewayv2_integration" "club-abode-integration" {
   api_id             = aws_apigatewayv2_api.club-abode-api.id
   integration_type   = "HTTP_PROXY"
@@ -29,12 +22,20 @@ resource "aws_apigatewayv2_integration" "club-abode-integration" {
   integration_uri    = "https://e35e00df-graphql-graphql-41d3-2003767172.us-east-1.elb.amazonaws.com"
 }
 
+resource "aws_apigatewayv2_route" "club-abode-route" {
+  api_id         = aws_apigatewayv2_api.club-abode-api.id
+  route_key      = "/graphql"
+  operation_name = "POST"
+  authorizer_id  = aws_apigatewayv2_authorizer.club-abode-auth0-authorizer.id
+  depends_on = [aws_apigatewayv2_integration.club-abode-integration]
+}
+
 resource "aws_apigatewayv2_deployment" "club-abode-deployment" {
   api_id      = aws_apigatewayv2_api.club-abode-api.id
   description = "Club Abode API Gateway deployment"
 
   depends_on = [aws_apigatewayv2_integration.club-abode-integration]
-  
+
   lifecycle {
     create_before_destroy = true
   }
