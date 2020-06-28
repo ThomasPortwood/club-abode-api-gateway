@@ -32,6 +32,8 @@ resource "aws_apigatewayv2_integration" "club-abode-integration" {
 resource "aws_apigatewayv2_deployment" "club-abode-deployment" {
   api_id      = aws_apigatewayv2_api.club-abode-api.id
   description = "Club Abode API Gateway deployment"
+
+  depends_on = [aws_apigatewayv2_integration.club-abode-integration]
   
   lifecycle {
     create_before_destroy = true
