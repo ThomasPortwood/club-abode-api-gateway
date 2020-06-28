@@ -1,9 +1,9 @@
 resource "aws_apigatewayv2_api" "club-abode-api" {
-  name                       = "club-abode-api-gateway"
-  protocol_type              = "HTTP"
+  name          = "club-abode-api-gateway"
+  protocol_type = "HTTP"
 }
 
-resource "aws_apigatewayv2_authorizer" "example" {
+resource "aws_apigatewayv2_authorizer" "club-abode-auth0-authorizer" {
   api_id           = aws_apigatewayv2_api.club-abode-api.id
   authorizer_type  = "JWT"
   identity_sources = ["$request.header.Authorization"]
@@ -15,9 +15,18 @@ resource "aws_apigatewayv2_authorizer" "example" {
   }
 }
 
+resource "aws_apigatewayv2_integration" "example" {
+  api_id           = aws_apigatewayv2_api.club-abode-api.id
+  integration_type = "AWS"
+  integration_method = "ANY"
+}
+
+
 resource "aws_apigatewayv2_route" "club-abode-route" {
-  api_id    = aws_apigatewayv2_api.club-abode-api.id
-  route_key = "$default"
+  api_id        = aws_apigatewayv2_api.club-abode-api.id
+  route_key     = "$default"
+  authorizer_id = aws_apigatewayv2_authorizer.club-abode-auth0-authorizer.id
+
 }
 
 
