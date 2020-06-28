@@ -23,10 +23,10 @@ resource "aws_apigatewayv2_integration" "club-abode-integration" {
 }
 
 resource "aws_apigatewayv2_route" "club-abode-route" {
+  depends_on = [aws_apigatewayv2_deployment.club-abode-deployment]
   api_id        = aws_apigatewayv2_api.club-abode-api.id
   route_key     = "$default"
   authorizer_id = aws_apigatewayv2_authorizer.club-abode-auth0-authorizer.id
-
 }
 
 resource "aws_apigatewayv2_deployment" "club-abode-deployment" {
