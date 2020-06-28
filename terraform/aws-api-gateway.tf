@@ -25,7 +25,7 @@ resource "aws_apigatewayv2_integration" "club-abode-integration" {
 resource "aws_apigatewayv2_route" "club-abode-route" {
   api_id             = aws_apigatewayv2_api.club-abode-api.id
   authorization_type = "JWT"
-  route_key          = "/graphql"
+  route_key          = "POST /graphql"
   operation_name     = "POST"
   authorizer_id      = aws_apigatewayv2_authorizer.club-abode-auth0-authorizer.id
 }
