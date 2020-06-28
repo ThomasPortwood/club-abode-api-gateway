@@ -1,5 +1,5 @@
 resource "aws_api_gateway_rest_api" "club-abode-gateway" {
-  name        = "Club-Abode"
+  name        = "club-abode-gateway"
   description = "This is my API for demonstration purposes"
 }
 
