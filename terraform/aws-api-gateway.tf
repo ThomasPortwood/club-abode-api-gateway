@@ -32,14 +32,7 @@ resource "aws_apigatewayv2_integration" "club-abode-integration" {
 resource "aws_apigatewayv2_deployment" "club-abode-deployment" {
   api_id      = aws_apigatewayv2_api.club-abode-api.id
   description = "Club Abode API Gateway deployment"
-
-  triggers = {
-    redeployment = sha1(join(",", list(
-      jsonencode(aws_apigatewayv2_integration.club-abode-integration),
-      jsonencode(aws_apigatewayv2_route.club-abode-route),
-    )))
-  }
-
+  
   lifecycle {
     create_before_destroy = true
   }
