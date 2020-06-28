@@ -27,18 +27,6 @@ resource "aws_apigatewayv2_route" "club-abode-route" {
   route_key      = "/graphql"
   operation_name = "POST"
   authorizer_id  = aws_apigatewayv2_authorizer.club-abode-auth0-authorizer.id
-  depends_on = [aws_apigatewayv2_integration.club-abode-integration]
-}
-
-resource "aws_apigatewayv2_deployment" "club-abode-deployment" {
-  api_id      = aws_apigatewayv2_api.club-abode-api.id
-  description = "Club Abode API Gateway deployment"
-
-  depends_on = [aws_apigatewayv2_integration.club-abode-integration]
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "aws_apigatewayv2_stage" "club-abode-stage-prod" {
